@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-navy: #001F3F;
+  --color-brand-teal: #00B4D8;
+  --color-brand-gray: #F5F5F5;
+  --font-sans: var(--font-inter);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  /* Light Mode */
+  --background: #F5F5F5; /* User: Soft gray background */
+  --foreground: #001F3F; /* User: Deep navy for text */
+  
+  --primary: #00B4D8; /* User: Vibrant teal for CTAs */
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #FFFFFF; /* Cards/Surfaces */
+  --secondary-foreground: #001F3F;
+  
+  --muted: #E2E8F0;
+  --muted-foreground: #64748B;
+  
+  --accent: #D1F0F7; /* Light version of teal for subtle highlights */
+  --accent-foreground: #001F3F;
+  
+  --border: #CBD5E1;
+  --input: #E2E8F0;
+  --ring: #00B4D8;
+  
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* Dark Mode */
+  --background: #121212; /* User: #121212 background */
+  --foreground: #E0E0E0; /* User: #E0E0E0 text */
+  
+  --primary: #00B4D8;
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #1E1E1E; /* Dark card background */
+  --secondary-foreground: #E0E0E0;
+  
+  --muted: #27272A;
+  --muted-foreground: #A1A1AA;
+  
+  --accent: #112830; /* Dark teal tint */
+  --accent-foreground: #E0E0E0;
+  
+  --border: #27272A;
+  --input: #27272A;
+  --ring: #00B4D8;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
