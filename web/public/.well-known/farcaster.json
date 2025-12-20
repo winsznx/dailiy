@@ -1,0 +1,16 @@
+{
+    "accountAssociation": {
+        "header": "eyJmaWQiOjkxNTIsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHg0NjlhND...",
+        "payload": "eyJkb21haW4iOiJkYWlsaXkudmVyY2VsLmF...",
+        "signature": "MHhkYWY1..."
+    },
+    "frame": {
+        "version": "1",
+        "name": "Dailiy",
+        "iconUrl": "https://dailiy.vercel.app/icon.png",
+        "homeUrl": "https://dailiy.vercel.app",
+        "splashImageUrl": "https://dailiy.vercel.app/splash.png",
+        "splashBackgroundColor": "#001F3F",
+        "webhookUrl": "https://dailiy.vercel.app/api/webhook"
+    }
+}
