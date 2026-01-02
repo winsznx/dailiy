@@ -1,37 +1,62 @@
 import { ethers } from "hardhat";
 
 async function main() {
-    const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-    const unlockTime = currentTimestampInSeconds + 60;
-
     const [deployer] = await ethers.getSigners();
+    const network = await ethers.provider.getNetwork();
+
     console.log("Deploying contracts with the account:", deployer.address);
+    console.log("Network:", network.name, "Chain ID:", network.chainId.toString());
 
-    // Default to Base Mainnet USDC if not specified
-    // Base Mainnet USDC: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
-    // Base Sepolia USDC: 0x036CbD53842c5426634e7929541eC2318f3dCF7e
+    // Real USDC addresses on Base networks
+    const USDC_ADDRESSES: { [key: string]: string } = {
+        "8453": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",  // Base Mainnet
+        "84532": "0x036CbD53842c5426634e7929541eC2318f3dCF7e", // Base Sepolia
+    };
 
-    let usdcAddress = process.env.USDC_ADDRESS;
+    const chainId = network.chainId.toString();
+    const usdcAddress = USDC_ADDRESSES[chainId];
 
     if (!usdcAddress) {
-        console.warn("No USDC_ADDRESS env var found. Using Base Mainnet USDC execution as default if network is appropriate.");
-        // Simple check for chain ID could be added here, but for now we assume the user configuring .env
-        usdcAddress = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+        throw new Error(`USDC not supported on chain ${chainId}. Please use Base or Base Sepolia.`);
     }
 
-    const dailiySBT = await ethers.deployContract("DailiySBT", [usdcAddress, deployer.address]);
+    console.log("Using USDC at:", usdcAddress);
+
+    // Deploy DailiySBT
+    const DailiySBT = await ethers.getContractFactory("DailiySBT");
+    const dailiySBT = await DailiySBT.deploy(usdcAddress, deployer.address);
 
     await dailiySBT.waitForDeployment();
+    const contractAddress = await dailiySBT.getAddress();
 
-    console.log(
-        `DailiySBT deployed to ${dailiySBT.target}`
-    );
+    console.log("\n✅ DailiySBT deployed to:", contractAddress);
+    console.log("\n📝 Update your frontend with:");
+    console.log(`NEXT_PUBLIC_CONTRACT_ADDRESS=${contractAddress}`);
+    console.log(`NEXT_PUBLIC_USDC_ADDRESS=${usdcAddress}`);
 
-    console.log("Make sure to update the frontend 'constants.ts' with this address!");
+    // Wait for block confirmations before verification
+    console.log("\nWaiting for block confirmations...");
+    await dailiySBT.deploymentTransaction()?.wait(5);
+
+    // Verify on Basescan
+    if (network.name !== "hardhat" && network.name !== "localhost") {
+        console.log("\nVerifying contract on Basescan...");
+        try {
+            await run("verify:verify", {
+                address: contractAddress,
+                constructorArguments: [usdcAddress, deployer.address],
+            });
+            console.log("✅ Contract verified on Basescan");
+        } catch (error: any) {
+            if (error.message.includes("Already Verified")) {
+                console.log("✅ Contract already verified on Basescan");
+            } else {
+                console.log("❌ Verification failed:", error.message);
+            }
+        }
+    }
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
     console.error(error);
     process.exitCode = 1;
