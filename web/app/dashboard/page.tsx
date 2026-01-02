@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { SealEntryModal } from "@/components/seal-entry-modal"
 import {
     LayoutDashboard,
     Book,
@@ -46,6 +47,7 @@ export default function DashboardPage() {
     const [isCreating, setIsCreating] = useState(false)
     const [newTitle, setNewTitle] = useState("")
     const [newContent, setNewContent] = useState("")
+    const [sealingEntry, setSealingEntry] = useState<{ id: string; title: string; content: string } | null>(null)
 
     // Voice Hooks
     const { isListening, transcript, startListening, stopListening, resetTranscript } = useVoiceInput()
