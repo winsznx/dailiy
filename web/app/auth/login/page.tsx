@@ -2,7 +2,7 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Input } from "postcss" // Mock
+
 import Link from "next/link"
 import { Github, Twitter } from "lucide-react"
 
