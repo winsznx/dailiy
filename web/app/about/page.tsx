@@ -62,9 +62,9 @@ export default function AboutPage() {
                         <h2 className="text-3xl font-bold text-center mb-12">Our Journey</h2>
                         <div className="space-y-8 border-l-2 border-border ml-4 pl-8 relative">
                             {[
-                                { year: "2024 Q1", title: "Project Inception", desc: "The idea for Dailiy was born during a hackathon." },
-                                { year: "2024 Q3", title: "Base Integration", desc: "Official launch on the Base L2 network." },
-                                { year: "2025 Q1", title: "V1 Launch", desc: "Public release with premium features." },
+                                { year: "2025 Q3", title: "Project Inception", desc: "The idea for Dailiy was born during a hackathon." },
+                                { year: "2025 Q4", title: "Base Integration", desc: "Official launch on the Base L2 network." },
+                                { year: "2026 Q1", title: "V1 Launch", desc: "Public release with premium features." },
                             ].map((item, i) => (
                                 <div key={i} className="relative">
                                     <span className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 border-background bg-brand-teal"></span>
